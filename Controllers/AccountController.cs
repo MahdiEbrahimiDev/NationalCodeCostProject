@@ -1,7 +1,9 @@
-﻿using System.Net.Http.Json;
+﻿using System.ComponentModel.Design;
+using System.Net.Http.Json;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace NationalCodeCostProject.Controllers;
 
@@ -16,20 +18,24 @@ public class AccountController : Controller
     public IActionResult Register() => View();
     [HttpPost]
     public async Task<IActionResult> Register(RegisterDto dto)
-    {
+    { if (ModelState.IsValid){
+    
         var success = await _userService.Register(dto);
         if (!success)
         {
             ViewBag.Message = "ثبت‌نام ناموفق بود (یوزرنیم تکراری یا پسوردها مطابقت ندارند)";
             return View();
         }
-
-        return RedirectToAction("Login");
+         return RedirectToAction("Login");
+    }
+    return View();
+       
     }
     public IActionResult Login() => View();
     [HttpPost]
-    public IActionResult Login(registerDto dto)
+    public async Task<IActionResult> Login(loginDto dto)
     {
+        if (ModelState.IsValid){
         var user = await _userService.Login(dto);
         if (user == null)
         {
@@ -48,8 +54,10 @@ public class AccountController : Controller
        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
        return RedirectToAction("Upload");
     }
+    return View();
+    }
 
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 

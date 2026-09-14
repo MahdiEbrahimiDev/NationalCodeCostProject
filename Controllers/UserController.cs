@@ -1,30 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.Design;
+using Microsoft.AspNetCore.Mvc;
 using NationalCodeCostProject.Data;
 
 namespace NationalCodeCostProject.Controllers;
 
 public class UserController : Controller
 {
-    private readonly AppDbContext _context;
+    private readonly IUserService _UserService;
 
-    public UserController(AppDbContext context)
+    public UserController(IUserService UserService)
     {
-        _context = context;
+        _UserService = UserService;
     }
 
     public IActionResult Index() => View();
 
     [HttpPost]
-    public IActionResult Index(string nationalCode)
-    {
-        var cost = _context.Costs
-            .FirstOrDefault(x => x.NationalCode == nationalCode);
+    
+public async Task<IActionResult> Index(UserViewModel viewModel)
+{
+    if (!ModelState.IsValid)
+        return View(viewModel);
 
-        if (cost != null)
-            ViewBag.Amount = cost.Amount;
-        else
-            ViewBag.Message = "کد ملی یافت نشد";
+    var res = await _UserService.GetPrice(viewModel);
 
-        return View();
-    }
+    if (res != null)
+        return View(res);
+
+    ModelState.AddModelError("", "کد ملی پیدا نشد.");
+
+    return View(viewModel);
+}
+
+
 }

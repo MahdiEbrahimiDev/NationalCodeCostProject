@@ -1,10 +1,15 @@
-﻿@{ Layout = "_Layout"; }
+﻿@model NationalCodeCostProject.DTOs.LoginDto
+@{ Layout = "_Layout"; }
 
 <div class="card shadow p-4 mx-auto" style="max-width:400px">
     <h4 class="text-center mb-3">ورود ادمین</h4>
     <form method="post">
-        <input name="username" class="form-control mb-2" placeholder="نام کاربری" />
-        <input name="password" type="password" class="form-control mb-2" placeholder="رمز عبور" />
+        <input asp-for="Username" class="form-control mb-2" placeholder="نام کاربری" />
+        <span asp-validation-for="Username" class="text-danger"></span>
+
+        <input asp-for="Password" type="password" class="form-control mb-2" placeholder="رمز عبور" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+
         <button class="btn btn-primary w-100">ورود</button>
     </form>
     <p class="text-danger mt-2">@ViewBag.Message</p>

@@ -1,18 +1,18 @@
-﻿@{ Layout = "_Layout"; }
+﻿<form method="post">
 
-<div class="card shadow p-4 mx-auto" style="max-width:400px">
-    <h4 class="text-center mb-3">استعلام هزینه</h4>
-    <form method="post">
-        <input name="nationalCode" class="form-control mb-2" placeholder="کد ملی" />
-        <button class="btn btn-primary w-100">نمایش هزینه</button>
-    </form>
+    <input asp-for="NationalCode"
+           class="form-control mb-2"
+           placeholder="کد ملی" />
 
-    @if (ViewBag.Amount != null)
-    {
-    <div class="alert alert-success mt-3">
-        هزینه: @ViewBag.Amount
-    </div>
-    }
+    <span asp-validation-for="NationalCode"
+          class="text-danger"></span>
 
-    <div class="text-danger mt-2">@ViewBag.Message</div>
+    <button class="btn btn-primary w-100">
+        نمایش هزینه
+    </button>
+
+</form>
+
+<div class="text-danger mt-2">
+    @Model.Price
 </div>

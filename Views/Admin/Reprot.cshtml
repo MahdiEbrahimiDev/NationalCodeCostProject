@@ -1,0 +1,44 @@
+@model NationalCodeCostProject.Models.CostReportViewModel
+@{ Layout = "_Layout"; }
+
+<h4 class="mb-3">گزارش کلی هزینه‌ها</h4>
+
+@if (Model.TotalCount == 0)
+{
+    <div class="alert alert-warning">هیچ رکوردی در سیستم ثبت نشده است.</div>
+}
+else
+{
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card text-center p-3">
+                <h6>تعداد کل رکوردها</h6>
+                <h3>@Model.TotalCount</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-3">
+                <h6>مجموع مبالغ</h6>
+                <h3>@Model.TotalAmount.ToString("N0")</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-3">
+                <h6>میانگین مبلغ</h6>
+                <h3>@Model.AverageAmount.ToString("N0")</h3>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-center p-3">
+                <h6>بیشترین مبلغ</h6>
+                <h3>@Model.MaxAmount.ToString("N0")</h3>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card text-center p-3">
+                <h6>کمترین مبلغ</h6>
+                <h3>@Model.MinAmount.ToString("N0")</h3>
+            </div>
+        </div>
+    </div>
+}

@@ -16,14 +16,25 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Account/Login";
         options.AccessDeniedPath = "/Account/Login";
         options.ExpireTimeSpan = TimeSpan.FromHours(2);
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecureAlways = true;
     });
     builder.Services.AddScoped<IUserService, UserService>();
     builder.Services.AddScoped<IExcelImportService, ExcelImportService>();
     builder.Services.AddScoped<ICostService, CostService>();
 var app = builder.Build();
-
+if (app.envEnvironment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error"); // تو Production، یه صفحه‌ی عمومی و بی‌ضرر نشون بده
+    app.UseHsts();
+}
 app.UseStaticFiles();
 app.UseRouting();
+app.UseHttpsRedirection();
 app.UseAuthentication();   
 app.UseAuthorization();
 app.MapControllerRoute(

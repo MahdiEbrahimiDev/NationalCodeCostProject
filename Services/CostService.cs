@@ -58,7 +58,7 @@ public class CostService : ICostService
         return new CostReportViewModel();
     }
 
-var result=_context.Cost.GroupBy(c=>1).Select(a=>new CostReportViewModel()
+var result=_context.Cost.GroupBy(g=>1).Select(a=>new CostReportViewModel()
 {
     TotalCount = g.Count(),
             TotalAmount = g.Sum(c => c.Amount),

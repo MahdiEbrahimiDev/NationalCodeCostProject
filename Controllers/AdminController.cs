@@ -1,13 +1,16 @@
-using System.ComponentModel.Design;
+﻿using System.ComponentModel.Design;
 
 [Authorize(Roles = "Admin")]
 public class AdminController : Controller
 {
     private readonly IExcelImportService _importService;
+        private readonly ICostService _CostService;
 
-    public AdminController(IExcelImportService importService)
+
+    public AdminController(IExcelImportService importService,ICostService costService)
     {
         _importService = importService;
+        _CostService=costService;
     }
     public async Task<IActionResult> Index(IndexViewModel viewmodel)
 {
@@ -26,5 +29,11 @@ public class AdminController : Controller
         var result = await _importService.ImportCostsAsync(file);
         ViewBag.Result = result;
         return View();
+    }
+    [HttpPost]
+public async Task<IActionResult> Report( CostReportViewModel model)
+    {
+        var res=await _CostService.GetReportAsync();
+        return view(res);
     }
 }
