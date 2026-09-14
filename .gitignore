@@ -1,0 +1,15 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+
+# Database
+*.db
+
+# Rider / VS Code
+.idea/
+.vscode/

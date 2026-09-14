@@ -1,0 +1,12 @@
+@{ Layout = "_Layout"; }
+
+<div class="card shadow p-4 mx-auto" style="max-width:400px">
+    <h4 class="text-center mb-3">ثبت‌نام ادمین</h4>
+    <form method="post">
+        <input name="Username" class="form-control mb-2" placeholder="نام کاربری" />
+        <input name="Password" type="password" class="form-control mb-2" placeholder="رمز عبور" />
+        <input name="ConfirmedPassword" type="password" class="form-control mb-2" placeholder="تکرار رمز عبور" />
+        <button class="btn btn-primary w-100">ثبت‌نام</button>
+    </form>
+    <p class="text-danger mt-2">@ViewBag.Message</p>
+</div>

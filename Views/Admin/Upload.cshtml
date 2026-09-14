@@ -1,0 +1,34 @@
+﻿@model NationalCodeCostProject.Models.UploadViewModel
+
+<div class="card shadow p-4 mx-auto" style="max-width:600px">
+    <h4 class="text-center mb-3">آپلود فایل اکسل هزینه‌ها</h4>
+
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" class="form-control mb-3" accept=".xlsx,.xls" />
+        <button type="submit" class="btn btn-primary w-100">آپلود</button>
+    </form>
+
+    @if (Model.Result != null)
+    {
+        <hr />
+        <div class="alert alert-info">
+            از @Model.Result.TotalRows سطر، <strong>@Model.Result.SuccessCount</strong> مورد با موفقیت ثبت شد.
+        </div>
+
+        @if (Model.Result.HasErrors)
+        {
+            <div class="alert alert-danger">
+                <strong>@Model.Result.Errors.Count خطا یافت شد:</strong>
+                <ul class="mb-0">
+                    @foreach (var error in Model.Result.Errors)
+                    {
+                        <li>
+                            @if (error.RowNumber > 0) { <text>سطر @error.RowNumber: </text> }
+                            @error.Message
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    }
+</div>

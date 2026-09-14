@@ -1,0 +1,1 @@
+public record registerDto(string Username ,string Password ,string confirmedpassword);
